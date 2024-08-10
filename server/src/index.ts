@@ -2,6 +2,8 @@ import express, { Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import { userRouter } from "./routes/userRoutes"
+
 dotenv.config();
 const port = process.env.PORT || "8080"
 const app = express();
@@ -14,6 +16,8 @@ app.get("/health", (_, res: Response) => {
     message: "Server is up and running"
   })
 })
+
+app.get("/user", userRouter)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`)
