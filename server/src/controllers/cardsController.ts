@@ -5,20 +5,8 @@ const prisma = new PrismaClient();
 
 export const getCards = async (req: Request, res: Response) => {
   try {
-    const limit = parseInt(req.query.limit as string) || 10;
-    const offset = parseInt(req.query.offset as string) || 0;
-    const user = req.user
 
-    if (!user) {
-      res.status(401).json({
-        message: "not authenticated"
-      })
-    }
-
-    const flashcards = await prisma.flashcards.findMany({
-      skip: offset,
-      take: limit,
-    });
+    const flashcards = await prisma.flashcards.findMany({});
 
     if (!flashcards) {
       res.status(404).json({
@@ -30,6 +18,7 @@ export const getCards = async (req: Request, res: Response) => {
       data: flashcards,
       message: "Success"
     })
+
   } catch (err) {
     console.log(err);
     res.status(500).json({
