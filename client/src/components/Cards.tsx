@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent, CardTitle } from "./ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
 interface Card {
@@ -12,6 +12,7 @@ interface Card {
 export const Cards = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isFlipped, setIsFlipped] = useState<Boolean>(false)
   const { toast } = useToast();
 
   const fetchCards = async () => {
@@ -33,7 +34,7 @@ export const Cards = () => {
   };
 
   useEffect(() => {
-    fetchCards(); // Fetch all cards on component mount
+    fetchCards();
   }, []);
 
   const handleNext = () => {
@@ -63,25 +64,27 @@ export const Cards = () => {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex justify-center">
-        <Card key={cards[currentIndex].id} className="p-4 border rounded shadow-sm">
+    <div className="p-4 w-full h-full flex flex-col justify-center items-center ">
+      <div className="flex justify-center items-center w-1/2">
+        <Card key={cards[currentIndex].id}
+          onClick={() => setIsFlipped(!isFlipped)}
+          className={`p-4 min-h-48 w-full  bg-gray-950 text-white border-none shadow-sky-900 shadow-sm rounded-xl ${isFlipped ? "animate-hflip" : ""}`}>
+          <CardTitle className="text-2xl text-gray-400 text-center">{isFlipped ? "Answer" : "Question"}</CardTitle>
           <CardContent>
-            <div className="font-bold text-lg mb-2">{cards[currentIndex].question}</div>
-            <div>{cards[currentIndex].answer}</div>
+            <div className="font-bold text-lg mb-2">{isFlipped ? cards[currentIndex].answer : cards[currentIndex].question}</div>
           </CardContent>
         </Card>
       </div>
-      <div className="flex justify-between mt-4">
+      <div className="flex w-1/2 justify-between mt-4">
         <button
           onClick={handlePrevious}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded"
+          className="px-4 py-2 bg-gray-800 text-gray-100 hover:text-gray-400 duration-200 rounded"
         >
           Previous
         </button>
         <button
           onClick={handleNext}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded"
+          className="px-4 py-2 bg-gray-800 text-gray-100 hover:text-gray-400 duration-200 rounded"
         >
           Next
         </button>

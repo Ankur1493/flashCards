@@ -3,7 +3,7 @@ import { Toaster } from "./components/ui/toaster"
 
 function App() {
   return (
-    <div className="min-h-screen h-full w-full flex justify-center items-center">
+    <div className="min-h-screen h-full w-full bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 flex justify-center items-center">
       <Cards />
       <Toaster />
     </div>
