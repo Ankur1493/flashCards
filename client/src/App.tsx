@@ -2,9 +2,9 @@ import { Button } from "./components/ui/button"
 
 function App() {
   return (
-    <>
-      <Button className="text-4xl p-4">Hello</Button>
-    </>
+    <div className="min-h-screen h-full w-full flex justify-center items-center">
+
+    </div>
   )
 }
 
